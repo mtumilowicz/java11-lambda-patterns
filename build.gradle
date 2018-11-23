@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+    id 'groovy'
+}
+
+group 'java11-lambda-patterns'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.4'
+    testCompile group: 'org.spockframework', name: 'spock-core', version: '1.2-groovy-2.5'
+}
