@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'groovy'
+    id 'io.franzbecker.gradle-lombok' version '1.14'
 }
 
 group 'java11-lambda-patterns'
@@ -8,11 +9,17 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 11
 
+lombok {
+    version = "1.18.4"
+}
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
     compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.4'
+    compile group: 'com.google.guava', name: 'guava', version: '27.0-jre'
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.2'
     testCompile group: 'org.spockframework', name: 'spock-core', version: '1.2-groovy-2.5'
 }
