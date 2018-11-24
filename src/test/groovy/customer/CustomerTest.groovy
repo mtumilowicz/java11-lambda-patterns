@@ -86,9 +86,9 @@ class CustomerTest extends Specification {
 
         when:
         def maxOrderOptional = customer.findOrderWithMaxPrice()
-
+        
         then:
-        maxOrderOptional == Optional.of(orders.max { it.price })
+        maxOrderOptional == Optional.ofNullable(orders.findAll { it.hasPrice() }.max { it.price })
     }
 
     def "test findOrderWithMaxPrice - empty orders"() {
