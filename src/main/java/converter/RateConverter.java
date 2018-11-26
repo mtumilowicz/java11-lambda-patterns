@@ -13,10 +13,10 @@ public class RateConverter implements CurrableDoubleBinaryOperator {
     }
 
     public static DoubleUnaryOperator milesToKmConverter() {
-        return new RateConverter().rcurry(1.609);
+        return new RateConverter().rate(1.609);
     }
 
     public static DoubleUnaryOperator celsiusToFahrenheitConverter() {
-        return new RateConverter().curry(1.8).andThen(x -> x + 32);
+        return new RateConverter().rate(1.8).andThen(x -> x + 32);
     }
 }

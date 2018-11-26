@@ -9,11 +9,7 @@ import java.util.function.DoubleUnaryOperator;
 @FunctionalInterface
 public interface CurrableDoubleBinaryOperator extends DoubleBinaryOperator {
     
-    default DoubleUnaryOperator curry(double t) {
-        return u -> applyAsDouble(t, u);
-    }
-
-    default DoubleUnaryOperator rcurry(double u) {
+    default DoubleUnaryOperator rate(double u) {
         return t -> applyAsDouble(t, u);
     }
 }
