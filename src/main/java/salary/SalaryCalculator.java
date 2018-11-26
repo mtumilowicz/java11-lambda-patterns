@@ -19,7 +19,7 @@ public class SalaryCalculator {
     public double calculate(double salary) {
         return operators.stream()
                 .map(rule -> rule.operator)
-                .reduce(operator -> operator, DoubleUnaryOperator::andThen)
+                .reduce(DoubleUnaryOperator.identity(), DoubleUnaryOperator::andThen)
                 .applyAsDouble(salary);
 
     }

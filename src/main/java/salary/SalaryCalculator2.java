@@ -9,7 +9,7 @@ public class SalaryCalculator2 {
     private final DoubleUnaryOperator operator;
 
     public SalaryCalculator2() {
-        this(x -> x);
+        this(DoubleUnaryOperator.identity());
     }
     
     private SalaryCalculator2(DoubleUnaryOperator operator) {
