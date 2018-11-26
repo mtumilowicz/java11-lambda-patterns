@@ -13,4 +13,12 @@ class RateConverterTest extends Specification {
         expect:
         RateConverter.milesToKmConverter().applyAsDouble(miles) == 1609
     }
+
+    def "test celsiusToFahrenheitConverter"() {
+        given:
+        def celsius = 100
+
+        expect:
+        RateConverter.celsiusToFahrenheitConverter().applyAsDouble(celsius) == 212
+    }
 }
