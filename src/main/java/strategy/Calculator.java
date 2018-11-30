@@ -6,6 +6,10 @@ import java.util.function.IntPredicate;
 /**
  * Created by mtumilowicz on 2018-11-30.
  */
+
+/*
+ * change to stocks: stream: stream().map(i -> getPrice(i)).filter(predicate -> PriceLessThan).sum()
+ */
 final class Calculator {
     static int totalValues(List<Integer> integers, IntPredicate take) {
         return integers.stream()
