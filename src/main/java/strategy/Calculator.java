@@ -13,4 +13,12 @@ final class Calculator {
                 .filter(take)
                 .sum();
     }
+    
+    static boolean isEven(int number) {
+        return number % 2 == 0;
+    }
+
+    static boolean isOdd(int number) {
+        return number % 2 != 0;
+    }
 }
