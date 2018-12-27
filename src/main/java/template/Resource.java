@@ -26,6 +26,7 @@ public class Resource implements AutoCloseable {
         }
     }
 
+    @Override
     public void close() {
 
     }
