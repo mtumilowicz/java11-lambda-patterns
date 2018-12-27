@@ -21,7 +21,7 @@ public class Camera {
     Camera withFilter(Function<Color, Color> transform) {
         return new Camera(transformColors.andThen(transform));
     }
-    
+
     public Color snap(Color color) {
         return transformColors.apply(color);
     }

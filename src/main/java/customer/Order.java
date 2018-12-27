@@ -15,7 +15,7 @@ import static java.util.Objects.nonNull;
 public class Order {
     int id;
     BigDecimal price;
-    
+
     boolean hasPrice() {
         return nonNull(price);
     }

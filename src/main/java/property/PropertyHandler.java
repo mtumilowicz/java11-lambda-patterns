@@ -21,7 +21,7 @@ public class PropertyHandler {
     public Optional<String> get(String key) {
         return Optional.ofNullable(properties.get(key));
     }
-    
+
     public String propertiesOf(ImmutableList<String> keys) {
         return ListUtils.emptyIfNull(keys).stream()
                 .map(this::get)

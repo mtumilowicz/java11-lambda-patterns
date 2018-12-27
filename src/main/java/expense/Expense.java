@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 public class Expense {
     Year year;
     ImmutableSet<String> tags;
-    
+
     public Stream<String> getTagsStream() {
         return SetUtils.emptyIfNull(tags).stream();
     }

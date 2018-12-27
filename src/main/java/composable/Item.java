@@ -10,5 +10,4 @@ import lombok.Value;
 @Builder
 class Item {
     int id;
-    
 }

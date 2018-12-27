@@ -11,7 +11,7 @@ public class SalaryCalculator2 {
     public SalaryCalculator2() {
         this(DoubleUnaryOperator.identity());
     }
-    
+
     private SalaryCalculator2(DoubleUnaryOperator operator) {
         this.operator = operator;
     }

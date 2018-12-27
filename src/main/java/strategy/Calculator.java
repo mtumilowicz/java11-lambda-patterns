@@ -17,8 +17,8 @@ final class Calculator {
                 .filter(take)
                 .sum();
     }
-    
-    
+
+
     // library of functions
     static boolean isEven(int number) {
         return number % 2 == 0;
