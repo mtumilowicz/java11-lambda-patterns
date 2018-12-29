@@ -10,17 +10,18 @@ import java.util.function.Consumer;
 @Value
 public class Resource implements AutoCloseable {
     private Resource(String param) {
+        System.out.println("create");
     }
 
     public void op1() {
-
+        System.out.println("op1");
     }
 
     public void op2() {
-
+        System.out.println("op2");
     }
 
-    public void use(String param, Consumer<Resource> block) {
+    public static void use(String param, Consumer<Resource> block) {
         try (final var resource = new Resource(param)) {
             block.accept(resource);
         }
@@ -28,6 +29,6 @@ public class Resource implements AutoCloseable {
 
     @Override
     public void close() {
-
+        System.out.println("close");
     }
 }
