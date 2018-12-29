@@ -24,7 +24,7 @@ class Calculator {
                 .sum();
     }
 
-
+    // library of functions
     static IntPredicate priceLessThan(int limit) {
         return it -> it < limit;
     }
