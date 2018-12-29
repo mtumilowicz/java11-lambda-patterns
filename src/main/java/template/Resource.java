@@ -21,7 +21,7 @@ public class Resource implements AutoCloseable {
     }
 
     public void use(String param, Consumer<Resource> block) {
-        try (final Resource resource = new Resource(param)) {
+        try (final var resource = new Resource(param)) {
             block.accept(resource);
         }
     }
