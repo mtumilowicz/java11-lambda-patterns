@@ -196,3 +196,41 @@ and functional interfaces to design API
         }
     }
     ```
+1. create complex DSL with hiding creation inside
+    ```
+    @Value
+    @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+    public class Mailer {
+        private static final Mailer EMPTY = new Mailer();
+    
+        String from;
+        String to;
+    
+        private Mailer() {
+            this.from = "";
+            this.to = "";
+        }
+    
+        Mailer from(String from) {
+            return new Mailer(StringUtils.defaultIfEmpty(from, ""), to);
+        }
+    
+        Mailer to(String to) {
+            return new Mailer(from, StringUtils.defaultIfEmpty(to, ""));
+        }
+    
+        static void send(UnaryOperator<Mailer> block) {
+            System.out.println(block.apply(EMPTY));
+        }
+    }
+    ```
+    and the example of usage:
+    ```
+    Mailer.send(
+        mailer -> mailer.from("mtumilowicz01@gmail.com")
+                        .to("abc@o2.pl")
+    )
+    ```
+    **note that in any point we don't have direct access to the object,
+    we cannot create object manually and we cannot reuse it
+    (there is NO Mailer object)**
