@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/mtumilowicz/java11-lambda-patterns.svg?branch=master)](https://travis-ci.com/mtumilowicz/java11-lambda-patterns)
+
 # java11-lambda-patterns
 Functional programming patterns in java.
 
