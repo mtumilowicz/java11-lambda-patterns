@@ -87,3 +87,54 @@ and functional interfaces to design API
         }
     }
     ```
+1. use tuples and know the stream API
+    ```
+    @Value
+    @Builder
+    public class Customer {
+        ImmutableList<Order> orders;
+        ImmutableList<Expense> expenses;
+        
+        // ... methods
+    }
+    
+    @Value
+    @Builder
+    class Expense {
+        Year year;
+        ImmutableSet<String> tags;
+    
+        Stream<String> getTagsStream() {
+            return SetUtils.emptyIfNull(tags).stream();
+        }
+    }
+    ```
+    and we want to:
+    * find order with max price
+        ```
+        Optional<Order> findOrderWithMaxPrice() {
+            return ListUtils.emptyIfNull(orders).stream()
+                    .filter(Order::hasPrice)
+                    .max(comparing(Order::getPrice));
+        
+        }
+        ```
+    * find top3 orders by price
+        ```
+        Triple<Order, Order, Order> findTop3OrdersByPrice() {
+            return ListUtils.emptyIfNull(orders).stream()
+                    .filter(Order::hasPrice)
+                    .sorted(comparing(Order::getPrice, reverseOrder()))
+                    .limit(3)
+                    .collect(collectingAndThen(toList(), ListToTripleConverter::convert));
+        }
+        ```
+    * construct an immutable map with (key, value) = (year, tags from that year)
+        ```
+        ImmutableMap<Year, Set<String>> yearTagsExpensesMap() {
+            return ListUtils.emptyIfNull(expenses).stream()
+                    .collect(collectingAndThen(groupingBy(Expense::getYear, flatMapping(Expense::getTagsStream, toSet())),
+                            ImmutableMap::copyOf)
+                    );
+        }
+        ```
