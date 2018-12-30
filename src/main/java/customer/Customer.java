@@ -10,6 +10,7 @@ import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.collections4.SetUtils;
 import org.apache.commons.lang3.tuple.Triple;
 
+import java.math.BigDecimal;
 import java.time.Year;
 import java.util.Optional;
 import java.util.Set;
@@ -17,6 +18,7 @@ import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.reverseOrder;
+import static java.util.Objects.nonNull;
 import static java.util.stream.Collectors.*;
 
 /**
@@ -59,5 +61,16 @@ class Expense {
 
     Stream<String> getTagsStream() {
         return SetUtils.emptyIfNull(tags).stream();
+    }
+}
+
+@Value
+@Builder
+class Order {
+    int id;
+    BigDecimal price;
+
+    boolean hasPrice() {
+        return nonNull(price);
     }
 }
