@@ -16,15 +16,14 @@ import java.util.function.IntUnaryOperator;
 class Calculator {
     PriceProvider priceProvider;
 
-    int totalValues(List<Stock> integers, IntPredicate take) {
+    int sumPrices(List<Stock> integers, IntPredicate take) {
         return integers.stream()
                 .map(Stock::getId)
                 .mapToInt(priceProvider::getPrice)
                 .filter(take)
                 .sum();
     }
-
-    // library of functions
+    
     static IntPredicate priceLessThan(int limit) {
         return it -> it < limit;
     }

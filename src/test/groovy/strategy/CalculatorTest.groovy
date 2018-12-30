@@ -9,7 +9,7 @@ import java.util.function.IntUnaryOperator
  */
 class CalculatorTest extends Specification {
 
-    def "test totalValues < 4"() {
+    def "test sumPrices; prices < 4"() {
         given:
         def stocks = [new Stock(1),
                       new Stock(2),
@@ -22,13 +22,13 @@ class CalculatorTest extends Specification {
         def calculator = new Calculator(new PriceProvider(IntUnaryOperator.identity()))
 
         when:
-        def sum = calculator.totalValues(stocks, Calculator.priceLessThan(4))
+        def sum = calculator.sumPrices(stocks, Calculator.priceLessThan(4))
 
         then:
         sum == 6
     }
 
-    def "test totalValues <= 5"() {
+    def "test sumPrices, prices < 3 or prices == 5"() {
         given:
         def stocks = [new Stock(1),
                       new Stock(2),
@@ -41,7 +41,7 @@ class CalculatorTest extends Specification {
         def calculator = new Calculator(new PriceProvider(IntUnaryOperator.identity()))
 
         when:
-        def sum = calculator.totalValues(stocks, Calculator.priceLessThan(3) | Calculator.priceEquals(5))
+        def sum = calculator.sumPrices(stocks, Calculator.priceLessThan(3) | Calculator.priceEquals(5))
 
         then:
         sum == 8
