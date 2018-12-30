@@ -234,3 +234,37 @@ and functional interfaces to design API
     **note that at any point we don't have direct access to the object,
     we cannot create object manually and we cannot reuse it
     (there is NO Mailer object)**
+1. know the comparator API
+
+    suppose we want to compare person by name, then by surname (if surname is null goes first)
+    ```
+    @Value
+    @Builder
+    class Person {
+        static final Comparator<Person> NAME_SURNAME_COMPARATOR = comparing(Person::getName)
+                .thenComparing(Person::getSurname, nullsFirst(naturalOrder()));
+    
+        String name;
+        String surname;
+    }
+    ```
+    and tests:
+    ```
+    given:
+    def B_B = Person.builder().name("B").surname("B_B").build()
+    def C_A = Person.builder().name("C").surname("C_A").build()
+    def A = Person.builder().name("A").surname("A").build()
+    def B_A = Person.builder().name("B").surname("B_A").build()
+    def C_null = Person.builder().name("C").surname(null).build()
+    def C_null2 = Person.builder().name("C").surname(null).build()
+    
+    when:
+    def list = List.of(B_B, C_A, A, B_A, C_null, C_null2)
+            .stream()
+            .sorted(Person.NAME_SURNAME_COMPARATOR)
+            .collect(toList())
+    
+    then:
+    list == [A, B_A, B_B, C_null, C_null2, C_A]
+    ```
+1. 
