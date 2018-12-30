@@ -32,7 +32,7 @@ in books or on the internet.
         }
     }
     ```
-    * other used classes as as simple as it can be:
+    * other used classes are as simple as they can be:
         ```
         @Value
         class Cart {
@@ -42,14 +42,17 @@ in books or on the internet.
                 this.items = ImmutableList.copyOf(items);
             }
         }
+        
         @Value
         class Delivery {
             Order order;
         }
+        
         @Value
         class Item {
             int id;
         }
+        
         @Value
         class Order {
             Cart cart;
