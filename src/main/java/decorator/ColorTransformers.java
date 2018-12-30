@@ -9,7 +9,7 @@ import static java.util.Objects.nonNull;
 /**
  * Created by mtumilowicz on 2018-11-30.
  */
-public class ColorTransformers {
+class ColorTransformers {
     static Color brighten(Color color, int modifier) {
         Preconditions.checkArgument(nonNull(color));
         Preconditions.checkArgument(modifier >= 0);
@@ -24,22 +24,22 @@ public class ColorTransformers {
 
     }
 
-    static private int negate(int color) {
+    private static int negate(int color) {
         Preconditions.checkArgument(color <= 255);
         Preconditions.checkArgument(color >= 0);
 
         return 255 - color;
     }
 
-    static private int red(Color color) {
+    private static int red(Color color) {
         return color.getRed();
     }
 
-    static private int green(Color color) {
+    private static int green(Color color) {
         return color.getGreen();
     }
 
-    static private int blue(Color color) {
+    private static int blue(Color color) {
         return color.getBlue();
     }
 }

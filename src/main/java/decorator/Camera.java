@@ -11,10 +11,10 @@ import java.util.function.Function;
  */
 @Value
 @RequiredArgsConstructor
-public class Camera {
+class Camera {
     Function<Color, Color> transformColors;
 
-    public Camera() {
+    Camera() {
         this.transformColors = Function.identity();
     }
 
@@ -22,7 +22,7 @@ public class Camera {
         return new Camera(transformColors.andThen(transform));
     }
 
-    public Color snap(Color color) {
+    Color snap(Color color) {
         return transformColors.apply(color);
     }
 }
