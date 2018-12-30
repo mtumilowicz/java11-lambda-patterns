@@ -1,26 +1,27 @@
 package salary;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.function.DoubleUnaryOperator;
 
 /**
  * Created by mtumilowicz on 2018-11-26.
  */
-public class SalaryCalculator {
-    private final List<SalaryRules> operators = new LinkedList<>();
+class SalaryCalculator {
+    private final DoubleUnaryOperator operator;
 
-    public SalaryCalculator with(SalaryRules rule) {
-        operators.add(rule);
-
-        return this;
+    SalaryCalculator() {
+        this(DoubleUnaryOperator.identity());
     }
 
-    public double calculate(double salary) {
-        return operators.stream()
-                .map(rule -> rule.operator)
-                .reduce(DoubleUnaryOperator.identity(), DoubleUnaryOperator::andThen)
-                .applyAsDouble(salary);
+    private SalaryCalculator(DoubleUnaryOperator operator) {
+        this.operator = operator;
+    }
+
+    SalaryCalculator with(SalaryRules rule) {
+        return new SalaryCalculator(operator.andThen(rule.operator));
+    }
+
+    double calculate(double salary) {
+        return operator.applyAsDouble(salary);
 
     }
 }
