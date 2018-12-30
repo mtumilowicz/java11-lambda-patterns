@@ -405,3 +405,43 @@ inside (package: **dsl**)
     then:
     sum == 8
     ```
+1. template method (variation of DSL example)
+
+    suppose we have `AutoCloseable` resource
+    ```
+    @Value
+    class Resource implements AutoCloseable {
+        private Resource(String param) {
+            System.out.println("create");
+        }
+    
+        void op1() {
+            System.out.println("op1");
+        }
+    
+        void op2() {
+            System.out.println("op2");
+        }
+    
+        static void use(String param, Consumer<Resource> block) {
+            try (final var resource = new Resource(param)) {
+                block.accept(resource);
+            }
+        }
+    
+        @Override
+        public void close() {
+            System.out.println("close");
+        }
+    }
+    ```
+    we publish only template method, we dont have direct access to the object
+    ```
+    Resource.use("param", {resource -> resource.op1(); resource.op2()})
+    ```
+    ```
+    create
+    op1
+    op2
+    close
+    ```
