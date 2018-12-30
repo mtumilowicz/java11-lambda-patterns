@@ -1,5 +1,7 @@
 package decorator;
 
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
@@ -12,6 +14,8 @@ import java.util.function.Function;
 @Value
 @RequiredArgsConstructor
 class Camera {
+    
+    @Getter(AccessLevel.NONE)
     Function<Color, Color> transformColors;
 
     Camera() {

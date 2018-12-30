@@ -14,14 +14,15 @@ class ColorTransformers {
         Preconditions.checkArgument(nonNull(color));
         Preconditions.checkArgument(modifier >= 0);
 
-        return new Color(color.getRed());
+        return new Color(red(color) + modifier,
+                green(color) + modifier,
+                blue(color) + modifier);
     }
 
     static Color negate(Color color) {
         Preconditions.checkArgument(nonNull(color));
 
         return new Color(negate(red(color)), negate(green(color)), negate(blue(color)));
-
     }
 
     private static int negate(int color) {
