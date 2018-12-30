@@ -2,16 +2,18 @@ package customer;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import converters.ListToTripleConverter;
-import expense.Expense;
 import lombok.Builder;
 import lombok.Value;
 import org.apache.commons.collections4.ListUtils;
+import org.apache.commons.collections4.SetUtils;
 import org.apache.commons.lang3.tuple.Triple;
 
 import java.time.Year;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.reverseOrder;
@@ -46,5 +48,16 @@ public class Customer {
                 .collect(collectingAndThen(groupingBy(Expense::getYear, flatMapping(Expense::getTagsStream, toSet())),
                         ImmutableMap::copyOf)
                 );
+    }
+}
+
+@Value
+@Builder
+class Expense {
+    Year year;
+    ImmutableSet<String> tags;
+
+    Stream<String> getTagsStream() {
+        return SetUtils.emptyIfNull(tags).stream();
     }
 }
