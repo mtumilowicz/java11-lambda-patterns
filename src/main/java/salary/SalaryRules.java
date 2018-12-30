@@ -10,7 +10,7 @@ import java.util.function.DoubleUnaryOperator;
 public enum SalaryRules {
     TAX(new RateConverter().rate(0.81)),
     BONUS(new RateConverter().rate(1.2)),
-    ADDITION(new RateConverter().rate(1).andThen(salary -> salary + 100));
+    ADDITION(salary -> salary + 100);
 
     public final DoubleUnaryOperator operator;
 
