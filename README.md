@@ -313,7 +313,7 @@ and functional interfaces to design API
                 this(DoubleUnaryOperator.identity());
             }
         
-            SalaryCalculator(DoubleUnaryOperator operator) {
+            private SalaryCalculator(DoubleUnaryOperator operator) {
                 this.operator = operator;
             }
         
