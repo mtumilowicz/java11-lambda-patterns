@@ -58,3 +58,32 @@ in books or on the internet.
             Cart cart;
         }
         ```
+1. it's often helpful to use currying(https://github.com/mtumilowicz/groovy-closure-currying) 
+and functional interfaces to design API
+    ```
+    @FunctionalInterface
+    interface CurrableDoubleBinaryOperator extends DoubleBinaryOperator {
+    
+        default DoubleUnaryOperator rate(double u) {
+            return t -> applyAsDouble(t, u);
+        }
+    }
+    ```
+    then we can easily implement conversion classes
+    ```
+    class RateConverter implements CurrableDoubleBinaryOperator {
+    
+        @Override
+        public double applyAsDouble(double value, double rate) {
+            return value * rate;
+        }
+    
+        static DoubleUnaryOperator milesToKmConverter() {
+            return new RateConverter().rate(1.609);
+        }
+    
+        static DoubleUnaryOperator celsiusToFahrenheitConverter() {
+            return new RateConverter().rate(1.8).andThen(x -> x + 32);
+        }
+    }
+    ```
