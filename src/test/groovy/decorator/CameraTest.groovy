@@ -17,6 +17,15 @@ class CameraTest extends Specification {
         camera.snap(Color.WHITE) == Color.BLACK
     }
 
+    def "test withFilter - negate then brighten"() {
+        given:
+        def camera = new Camera().withFilter({ ColorTransformers.negate(it) })
+                .withFilter({ ColorTransformers.brighten(it, 20) })
+
+        expect:
+        camera.snap(new Color(100, 100, 100)) == new Color(175, 175, 175)
+    }
+
     def "test snap - no filter"() {
         given:
         def camera = new Camera()
