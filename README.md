@@ -327,3 +327,13 @@ and functional interfaces to design API
             }
         }
         ```
+    * tests
+        ```
+        given:
+        def calculator = new SalaryCalculator().with(SalaryRules.BONUS)
+                .with(SalaryRules.ADDITION)
+                .with(SalaryRules.TAX)
+        
+        expect:
+        calculator.calculate(1000) == 1053
+        ```
