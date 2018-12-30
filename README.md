@@ -138,3 +138,61 @@ and functional interfaces to design API
                     );
         }
         ```
+1. try to avoid decorator pattern - use function composition instead
+    ```
+    @Value
+    @RequiredArgsConstructor
+    class Camera {
+        Function<Color, Color> transformColors;
+    
+        Camera() {
+            this.transformColors = Function.identity();
+        }
+    
+        Camera withFilter(Function<Color, Color> transform) {
+            return new Camera(transformColors.andThen(transform));
+        }
+    
+        Color snap(Color color) {
+            return transformColors.apply(color);
+        }
+    }
+    ```
+    and a library of functions to transform colors
+    ```
+    class ColorTransformers {
+        static Color brighten(Color color, int modifier) {
+            Preconditions.checkArgument(nonNull(color));
+            Preconditions.checkArgument(modifier >= 0);
+    
+            return new Color(red(color) + modifier,
+                    green(color) + modifier,
+                    blue(color) + modifier);
+        }
+    
+        static Color negate(Color color) {
+            Preconditions.checkArgument(nonNull(color));
+    
+            return new Color(negate(red(color)), negate(green(color)), negate(blue(color)));
+        }
+    
+        private static int negate(int color) {
+            Preconditions.checkArgument(color <= 255);
+            Preconditions.checkArgument(color >= 0);
+    
+            return 255 - color;
+        }
+    
+        private static int red(Color color) {
+            return color.getRed();
+        }
+    
+        private static int green(Color color) {
+            return color.getGreen();
+        }
+    
+        private static int blue(Color color) {
+            return color.getBlue();
+        }
+    }
+    ```
