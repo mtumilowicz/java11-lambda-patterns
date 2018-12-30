@@ -386,3 +386,22 @@ inside (package: **dsl**)
         }
     }
     ```
+    suppose we want to sum stocks with prices < 3 or prices == 5
+    ```
+    given:
+    def stocks = [new Stock(1),
+                  new Stock(2),
+                  new Stock(3),
+                  new Stock(4),
+                  new Stock(5),
+                  new Stock(6),
+                  new Stock(7)]
+    
+    def calculator = new Calculator(new PriceProvider(IntUnaryOperator.identity()))
+    
+    when:
+    def sum = calculator.sumPrices(stocks, Calculator.priceLessThan(3) | Calculator.priceEquals(5))
+    
+    then:
+    sum == 8
+    ```
