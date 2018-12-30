@@ -7,8 +7,8 @@ import java.util.function.DoubleUnaryOperator;
  * Created by mtumilowicz on 2018-11-26.
  */
 @FunctionalInterface
-public interface CurrableDoubleBinaryOperator extends DoubleBinaryOperator {
-    
+interface CurrableDoubleBinaryOperator extends DoubleBinaryOperator {
+
     default DoubleUnaryOperator rate(double u) {
         return t -> applyAsDouble(t, u);
     }
