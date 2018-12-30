@@ -405,7 +405,7 @@ inside (package: **dsl**)
     then:
     sum == 8
     ```
-1. template method (variation of DSL example)
+1. template method (variation of DSL example) (package: **template**)
 
     suppose we have `AutoCloseable` resource
     ```
