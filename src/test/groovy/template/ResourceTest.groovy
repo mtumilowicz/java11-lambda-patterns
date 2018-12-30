@@ -7,12 +7,9 @@ import spock.lang.Specification
  */
 class ResourceTest extends Specification {
     def "test use"() {
-        given:
-
-        when:
         Resource.use("param", {resource -> resource.op1(); resource.op2()})
         
-        then:
-        1
+        expect:
+        1 == 1
     }
 }
