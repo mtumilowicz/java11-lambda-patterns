@@ -59,7 +59,7 @@ in books or on the internet.
         }
         ```
 1. it's often helpful to use currying(https://github.com/mtumilowicz/groovy-closure-currying) 
-and functional interfaces to design API
+and functional interfaces to design API (package: **converter**)
     ```
     @FunctionalInterface
     interface CurrableDoubleBinaryOperator extends DoubleBinaryOperator {
@@ -87,7 +87,7 @@ and functional interfaces to design API
         }
     }
     ```
-1. use tuples and know the stream API
+1. use tuples and know the stream API (package: **customer**)
     ```
     @Value
     @Builder
@@ -138,7 +138,8 @@ and functional interfaces to design API
                     );
         }
         ```
-1. try to avoid decorator pattern - use function composition instead
+1. try to avoid decorator pattern - use function 
+composition instead (package: **decorator**)
     ```
     @Value
     @RequiredArgsConstructor
@@ -196,7 +197,8 @@ and functional interfaces to design API
         }
     }
     ```
-1. create complex DSL with hiding creation inside
+1. create complex DSL with hiding creation 
+inside (package: **dsl**)
     ```
     @Value
     @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -234,7 +236,7 @@ and functional interfaces to design API
     **note that at any point we don't have direct access to the object,
     we cannot create object manually and we cannot reuse it
     (there is NO Mailer object)**
-1. know the comparator API
+1. know the comparator API (package: **person**)
 
     suppose we want to compare person by name, then by surname (if surname is null goes first)
     ```
@@ -268,6 +270,7 @@ and functional interfaces to design API
     list == [A, B_A, B_B, C_null, C_null2, C_A]
     ```
 1. compose behaviours instead of accumulating objects in lists
+(package: **salary**)
 
     suppose we want to calculate salary according to some
     salary rules
@@ -337,3 +340,49 @@ and functional interfaces to design API
         expect:
         calculator.calculate(1000) == 1053
         ```
+1. strategy pattern (library of functions) (package: **strategy**)
+
+    we have `PriceProvider` to get current stock price (`Stock` class
+    is as simple as possible)
+    ```
+    @Value
+    class PriceProvider {
+        @Getter(AccessLevel.NONE)
+        IntUnaryOperator priceSource;
+    
+        int getPrice(int id) {
+            return priceSource.applyAsInt(id);
+        }
+    }
+    
+    @Value
+    class Stock {
+        int id;
+    }
+    ```
+    and suppose we want to calculate prices
+    for a given stream of stocks (with some
+    custom filtering)
+    ```
+    @Value
+    class Calculator {
+        PriceProvider priceProvider;
+    
+        int totalValues(List<Stock> integers, IntPredicate take) {
+            return integers.stream()
+                    .map(Stock::getId)
+                    .mapToInt(priceProvider::getPrice)
+                    .filter(take)
+                    .sum();
+        }
+        
+        // library of functions
+        static IntPredicate priceLessThan(int limit) {
+            return it -> it < limit;
+        }
+    
+        static IntPredicate priceEquals(int limit) {
+            return it -> it == limit;
+        }
+    }
+    ```
