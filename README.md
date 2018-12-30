@@ -111,6 +111,17 @@ and functional interfaces to design API (package: **converter**)
             return SetUtils.emptyIfNull(tags).stream();
         }
     }
+    
+    @Value
+    @Builder
+    class Order {
+        int id;
+        BigDecimal price;
+    
+        boolean hasPrice() {
+            return nonNull(price);
+        }
+    }
     ```
     examples:
     * find order with max price
@@ -199,6 +210,15 @@ composition instead (package: **decorator**)
             return color.getBlue();
         }
     }
+    ```
+    examples:
+    ```
+    given:
+    def camera = new Camera().withFilter({ ColorTransformers.negate(it) })
+            .withFilter({ ColorTransformers.brighten(it, 20) })
+    
+    expect:
+    camera.snap(new Color(100, 100, 100)) == new Color(175, 175, 175)
     ```
 1. create complex DSL with hiding creation 
 inside (package: **dsl**)
@@ -345,7 +365,7 @@ inside (package: **dsl**)
         ```
 1. strategy pattern (library of functions) (package: **strategy**)
 
-    we have `PriceProvider` to get current stock price (`Stock` class
+    we have `PriceProvider` to get the current stock price (`Stock` class
     is as simple as possible)
     ```
     @Value
@@ -438,8 +458,11 @@ inside (package: **dsl**)
         }
     }
     ```
-    we publish only template method, we don't have direct 
-    access to the object, example:
+    we publish only template method (`use`), we don't have direct 
+    access to the object - so we guarantee that if someone
+    will use resource it will be closed in the end
+    
+    example:
     ```
     Resource.use("param", resource -> {resource.op1(); resource.op2();})
     ```
