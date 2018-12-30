@@ -267,4 +267,63 @@ and functional interfaces to design API
     then:
     list == [A, B_A, B_B, C_null, C_null2, C_A]
     ```
-1. 
+1. compose behaviours instead of accumulating objects in lists
+
+    suppose we want to calculate salary according to some
+    salary rules
+    ```
+    public enum SalaryRules {
+        TAX(new RateConverter().rate(0.81)),
+        BONUS(new RateConverter().rate(1.2)),
+        ADDITION(salary -> salary + 100);
+    
+        public final DoubleUnaryOperator operator;
+    
+        SalaryRules(DoubleUnaryOperator operator) {
+            this.operator = operator;
+        }
+    }
+    ```
+    * naive approach
+        ```
+        class NaiveSalaryCalculator {
+            final List<SalaryRules> operators = new LinkedList<>();
+        
+            NaiveSalaryCalculator with(SalaryRules rule) {
+                operators.add(rule);
+        
+                return this;
+            }
+        
+            double calculate(double salary) {
+                return operators.stream()
+                        .map(rule -> rule.operator)
+                        .reduce(DoubleUnaryOperator.identity(), DoubleUnaryOperator::andThen)
+                        .applyAsDouble(salary);
+        
+            }
+        }
+        ```
+    * better approach - composing functions
+        ```
+        class SalaryCalculator {
+            private final DoubleUnaryOperator operator;
+        
+            SalaryCalculator() {
+                this(DoubleUnaryOperator.identity());
+            }
+        
+            SalaryCalculator(DoubleUnaryOperator operator) {
+                this.operator = operator;
+            }
+        
+            SalaryCalculator with(SalaryRules rule) {
+                return new SalaryCalculator(operator.andThen(rule.operator));
+            }
+        
+            double calculate(double salary) {
+                return operator.applyAsDouble(salary);
+        
+            }
+        }
+        ```
