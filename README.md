@@ -60,7 +60,8 @@ in books or on the internet.
             Cart cart;
         }
         ```
-1. it's often helpful to use currying(https://github.com/mtumilowicz/groovy-closure-currying) 
+1. it's often helpful to use currying 
+(https://github.com/mtumilowicz/groovy-closure-currying) 
 and functional interfaces to design API (package: **converter**)
     ```
     @FunctionalInterface
@@ -111,7 +112,7 @@ and functional interfaces to design API (package: **converter**)
         }
     }
     ```
-    and we want to:
+    examples:
     * find order with max price
         ```
         Optional<Order> findOrderWithMaxPrice() {
@@ -362,7 +363,7 @@ inside (package: **dsl**)
         int id;
     }
     ```
-    and suppose we want to calculate prices
+    example: suppose we want to calculate prices
     for a given stream of stocks (with some
     custom filtering)
     ```
@@ -437,10 +438,12 @@ inside (package: **dsl**)
         }
     }
     ```
-    we publish only template method, we dont have direct access to the object
+    we publish only template method, we don't have direct 
+    access to the object, example:
     ```
-    Resource.use("param", {resource -> resource.op1(); resource.op2()})
+    Resource.use("param", resource -> {resource.op1(); resource.op2();})
     ```
+    produces output:
     ```
     create
     op1
