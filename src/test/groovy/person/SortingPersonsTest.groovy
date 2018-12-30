@@ -2,9 +2,7 @@ package person
 
 import spock.lang.Specification
 
-import static java.util.Comparator.*
 import static java.util.stream.Collectors.toList
-
 
 /**
  * Created by mtumilowicz on 2018-11-26.
@@ -23,8 +21,7 @@ class SortingPersonsTest extends Specification {
         when:
         def list = List.of(B_B, C_A, A, B_A, C_null, C_null2)
                 .stream()
-                .sorted(comparing({ it.getName() })
-                    .thenComparing({ it.getSurname() }, nullsFirst(naturalOrder())))
+                .sorted(Person.NAME_SURNAME_COMPARATOR)
                 .collect(toList())
 
         then:
