@@ -231,6 +231,6 @@ and functional interfaces to design API
                         .to("abc@o2.pl")
     )
     ```
-    **note that in any point we don't have direct access to the object,
+    **note that at any point we don't have direct access to the object,
     we cannot create object manually and we cannot reuse it
     (there is NO Mailer object)**
