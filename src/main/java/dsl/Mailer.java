@@ -31,7 +31,7 @@ public class Mailer {
         return new Mailer(from, StringUtils.defaultIfEmpty(to, ""));
     }
 
-    public static void send(UnaryOperator<Mailer> block) {
+    static void send(UnaryOperator<Mailer> block) {
         System.out.println(block.apply(EMPTY));
     }
 }
