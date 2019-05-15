@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 /**
  * Created by mtumilowicz on 2019-05-15.
  * <p>
- * TO-DO
+ * TO-DO (working in progress)
  */
 public interface CurrencyConverter {
 
