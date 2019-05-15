@@ -20,23 +20,23 @@ public interface CurrencyConverter {
 
     BigDecimal convert(BigDecimal amount);
 
-    interface BiFunction {
+    interface To {
         BigDecimal convert(BigDecimal amount, String toCurrency);
-
+        
         default CurrencyConverter to(String toCurrency) {
             return amount -> convert(amount, toCurrency);
         }
     }
-
-    interface TriFunction {
+    
+    interface From {
         BigDecimal convert(BigDecimal amount, String fromCurrency, String toCurrency);
-
-        default BiFunction from(String fromCurrency) {
+        
+        default To from(String fromCurrency) {
             return (amount, toCurrency) -> convert(amount, fromCurrency, toCurrency);
         }
     }
 
-    static TriFunction of(LocalDate date) {
+    static From of(LocalDate date) {
 
         return (amount, fromCurrency, toCurrency) -> {
 
@@ -66,6 +66,7 @@ public interface CurrencyConverter {
     static void main(String[] args) {
         System.out.println(CurrencyConverter.of(LocalDate.of(2018, 11, 5))
                 .from("EUR")
-                .to("GBP").convert(BigDecimal.valueOf(1000)));
+                .to("GBP")
+                .convert(BigDecimal.valueOf(1000)));
     }
 }
